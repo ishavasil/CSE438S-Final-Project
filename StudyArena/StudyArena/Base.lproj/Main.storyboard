@@ -1,24 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="StudyArena" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Study Arena" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4C-Av-KV8">
+                                <rect key="frame" x="59" y="81" width="275" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="pMD-Nt-mGa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="KohinoorTelugu-Medium" family="Kohinoor Telugu" pointSize="42"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhg-HY-peP">
+                                <rect key="frame" x="94" y="238" width="205" height="45"/>
+                                <color key="tintColor" red="0.62577469779999995" green="0.82132070310000005" blue="0.86101246840000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add a New Course">
+                                    <fontDescription key="titleFontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="22"/>
+                                </buttonConfiguration>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cLQ-L7-mte">
+                                <rect key="frame" x="16" y="312" width="361" height="481"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lbI-JC-vWG">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qJE-uc-414">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="132"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CCG-YH-O3F">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="132"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="Class" text="Class Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BpX-1n-xJD">
+                                                    <rect key="frame" x="11.666666666666664" y="54" width="104.66666666666669" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="BpX-1n-xJD" firstAttribute="centerY" secondItem="CCG-YH-O3F" secondAttribute="centerY" id="1Sm-wi-04c"/>
+                                                <constraint firstItem="BpX-1n-xJD" firstAttribute="top" secondItem="CCG-YH-O3F" secondAttribute="top" constant="54" id="W6T-8f-CFD"/>
+                                                <constraint firstItem="BpX-1n-xJD" firstAttribute="centerX" secondItem="CCG-YH-O3F" secondAttribute="centerX" id="o8K-p4-CDN"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <searchBar contentMode="redraw" placeholder="Search for a Course" translatesAutoresizingMaskIntoConstraints="NO" id="0Af-tW-4Fz">
+                                <rect key="frame" x="16" y="175" width="361" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="jbg-dE-txC"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cLQ-L7-mte" secondAttribute="bottom" constant="25" id="02Y-En-GQy"/>
+                            <constraint firstItem="i4C-Av-KV8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="22" id="5QV-4R-Pbe"/>
+                            <constraint firstItem="i4C-Av-KV8" firstAttribute="centerX" secondItem="cLQ-L7-mte" secondAttribute="centerX" id="7a7-Nr-2AG"/>
+                            <constraint firstItem="i4C-Av-KV8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="59" id="9YZ-di-I44"/>
+                            <constraint firstItem="Fhg-HY-peP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="238" id="HDN-71-6AP"/>
+                            <constraint firstItem="cLQ-L7-mte" firstAttribute="leading" secondItem="0Af-tW-4Fz" secondAttribute="leading" id="Isb-Kb-SfU"/>
+                            <constraint firstItem="0Af-tW-4Fz" firstAttribute="top" secondItem="i4C-Av-KV8" secondAttribute="bottom" constant="43" id="MaT-fq-1Ye"/>
+                            <constraint firstItem="Fhg-HY-peP" firstAttribute="top" secondItem="0Af-tW-4Fz" secondAttribute="bottom" constant="19" id="OAy-sR-XPB"/>
+                            <constraint firstItem="i4C-Av-KV8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Sdf-Vf-cAa"/>
+                            <constraint firstItem="i4C-Av-KV8" firstAttribute="centerX" secondItem="0Af-tW-4Fz" secondAttribute="centerX" id="Wsn-et-U6R"/>
+                            <constraint firstItem="i4C-Av-KV8" firstAttribute="centerX" secondItem="Fhg-HY-peP" secondAttribute="centerX" id="cdY-0t-ILm"/>
+                            <constraint firstItem="Fhg-HY-peP" firstAttribute="centerX" secondItem="0Af-tW-4Fz" secondAttribute="centerX" id="fEH-Sf-Kyx"/>
+                            <constraint firstItem="cLQ-L7-mte" firstAttribute="top" secondItem="Fhg-HY-peP" secondAttribute="bottom" constant="29" id="oUI-Tq-LqE"/>
+                            <constraint firstItem="cLQ-L7-mte" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="td8-mH-63l"/>
+                            <constraint firstItem="Fhg-HY-peP" firstAttribute="centerX" secondItem="cLQ-L7-mte" secondAttribute="centerX" id="wQl-nX-wdk"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-16.030534351145036" y="3.5211267605633805"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
