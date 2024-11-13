@@ -11,8 +11,13 @@ import FirebaseDatabase
 
 class ViewController: UIViewController {
     
+    let ai = OpenAIService()
+    
+    
+    var assistantID:String = "";
+    
     var ref: DatabaseReference!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,14 +26,18 @@ class ViewController: UIViewController {
         fetchClassesData()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.addClassData(classID: "cse131", assistant: "131Assistant", averageScore: 14, highScore: 15, lowScore: 13, quizzesTaken: 10)
+            self.addClassData(classID: "cse131", assistant: "asst_R98EZmBJAJITwPBicjQhTaEx", averageScore: 14, highScore: 15, lowScore: 13, quizzesTaken: 10)
+        }
+        
+        ai.sendMessageToAssistant(assistantId: assistantID) { response in
+            print(response ?? "no message recieved");
         }
         
     }
     
     func fetchClassesData() {
         let classesRef = ref.child("classes")
-
+        
         classesRef.observeSingleEvent(of: .value) { snapshot in
             for child in snapshot.children {
                 if let childSnapshot = child as? DataSnapshot,
@@ -42,7 +51,9 @@ class ViewController: UIViewController {
                     let highScore = classData["highScore"] as? Int ?? 0
                     let lowScore = classData["lowScore"] as? Int ?? 0
                     let quizzesTaken = classData["quizzesTaken"] as? Int ?? 0
-
+                    
+                    self.assistantID = assistant;
+                    
                     print("Assistant: \(assistant)")
                     print("Average Score: \(averageScore)")
                     print("High Score: \(highScore)")
@@ -74,6 +85,8 @@ class ViewController: UIViewController {
             }
         }
     }
+    
 
+    
+    
 }
-
