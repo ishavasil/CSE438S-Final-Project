@@ -10,6 +10,8 @@
 		522D43EA2CE4184500EF9136 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 522D43E92CE4184500EF9136 /* FirebaseCore */; };
 		522D43EC2CE4184500EF9136 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 522D43EB2CE4184500EF9136 /* FirebaseDatabase */; };
 		522D43EE2CE4184500EF9136 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 522D43ED2CE4184500EF9136 /* FirebaseFirestore */; };
+		5A5426012CFA81C1006781AE /* ClassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5426002CFA81C1006781AE /* ClassData.swift */; };
+		5A5426032CFA8416006781AE /* SelectCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5426022CFA8416006781AE /* SelectCourseViewController.swift */; };
 		5AB29D962CDBE2D700B87DA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AB29D952CDBE2D700B87DA7 /* GoogleService-Info.plist */; };
 		5AB29D992CDBE40900B87DA7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5AB29D982CDBE40900B87DA7 /* FirebaseAnalytics */; };
 		B74D7E592CE467DC00E85A20 /* OpenAI.plist in Resources */ = {isa = PBXBuildFile; fileRef = B74D7E582CE467DC00E85A20 /* OpenAI.plist */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A5426002CFA81C1006781AE /* ClassData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassData.swift; sourceTree = "<group>"; };
+		5A5426022CFA8416006781AE /* SelectCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCourseViewController.swift; sourceTree = "<group>"; };
 		5AB29D952CDBE2D700B87DA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B74D7E582CE467DC00E85A20 /* OpenAI.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OpenAI.plist; sourceTree = "<group>"; };
 		B74D7E5A2CE4712E00E85A20 /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 				5AB29D952CDBE2D700B87DA7 /* GoogleService-Info.plist */,
 				B74D7E582CE467DC00E85A20 /* OpenAI.plist */,
 				C8CB31952CDBDA8A009D58CD /* Info.plist */,
+				5A5426002CFA81C1006781AE /* ClassData.swift */,
+				5A5426022CFA8416006781AE /* SelectCourseViewController.swift */,
 			);
 			path = StudyArena;
 			sourceTree = "<group>";
@@ -286,10 +292,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A5426032CFA8416006781AE /* SelectCourseViewController.swift in Sources */,
 				B74D7E5B2CE4712E00E85A20 /* OpenAIClient.swift in Sources */,
 				C8CB318C2CDBDA89009D58CD /* ViewController.swift in Sources */,
 				C8CB31882CDBDA89009D58CD /* AppDelegate.swift in Sources */,
 				C8CB318A2CDBDA89009D58CD /* SceneDelegate.swift in Sources */,
+				5A5426012CFA81C1006781AE /* ClassData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

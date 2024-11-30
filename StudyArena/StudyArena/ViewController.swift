@@ -9,20 +9,26 @@ import UIKit
 import FirebaseFirestore
 import FirebaseDatabase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    
+    
+    @IBOutlet weak var classesCollectionView: UICollectionView!
+    var ref: DatabaseReference!
+    var classes: [ClassData] = [] // Array to hold fetched class data
     
     let ai = OpenAIService()
     
     
     var assistantID:String = "";
     
-    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
         
+        setupCollectionView()
         fetchClassesData()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -39,6 +45,7 @@ class ViewController: UIViewController {
         let classesRef = ref.child("classes")
         
         classesRef.observeSingleEvent(of: .value) { snapshot in
+            var fetchedClasses: [ClassData] = []
             for child in snapshot.children {
                 if let childSnapshot = child as? DataSnapshot,
                    let classData = childSnapshot.value as? [String: Any] {
@@ -53,7 +60,15 @@ class ViewController: UIViewController {
                     let quizzesTaken = classData["quizzesTaken"] as? Int ?? 0
                     
                     self.assistantID = assistant;
-                    
+                    let classObject = ClassData(
+                        id: classID,
+                        assistant: assistant,
+                        averageScore: averageScore,
+                        highScore: highScore,
+                        lowScore: lowScore,
+                        quizzesTaken: quizzesTaken
+                    )
+                    fetchedClasses.append(classObject)
                     print("Assistant: \(assistant)")
                     print("Average Score: \(averageScore)")
                     print("High Score: \(highScore)")
@@ -62,8 +77,66 @@ class ViewController: UIViewController {
                     print()
                 }
             }
+            self.classes = fetchedClasses
+
+            DispatchQueue.main.async {
+                self.classesCollectionView.reloadData()
+            }
         }
     }
+    
+    @objc func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return classes.count
+        }
+
+    @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ClassCell", for: indexPath)
+
+            // Customize the cell
+            cell.contentView.subviews.forEach { $0.removeFromSuperview() } // Clear previous content
+            let label = UILabel(frame: cell.contentView.bounds)
+            label.text = classes[indexPath.item].id
+            label.textAlignment = .center
+            cell.contentView.addSubview(label)
+
+            cell.contentView.backgroundColor = .lightGray
+            cell.layer.cornerRadius = 8
+
+            return cell
+        }
+
+        // MARK: - UICollectionViewDelegate
+
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let selectedClass = classes[indexPath.item]
+//        print("Selected class: \(selectedClass.id)") // Debugging
+//
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        if let detailVC = storyboard.instantiateViewController(withIdentifier: "SelectCourseViewController") as? SelectCourseViewController {
+//            detailVC.classData = selectedClass
+//            self.navigationController?.pushViewController(detailVC, animated: true)
+//        }
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ShowSelectCourseSegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowSelectCourseSegue" {
+            if let detailVC = segue.destination as? SelectCourseViewController,
+               let indexPath = classesCollectionView.indexPathsForSelectedItems?.first {
+                let selectedClass = classes[indexPath.item]
+                print("Selected class: \(selectedClass.id)") // Debugging
+                // Pass the selected class data to the SelectCourseViewController
+                detailVC.modalPresentationStyle = .fullScreen
+                detailVC.classData = classes[indexPath.row]
+            }
+        }
+    }
+
+
+
     
     
     func addClassData(classID: String, assistant: String, averageScore: Int, highScore: Int, lowScore: Int, quizzesTaken: Int) {
@@ -84,6 +157,16 @@ class ViewController: UIViewController {
                 self.fetchClassesData()
             }
         }
+    }
+    
+    func setupCollectionView() {
+        print("Setting up Collection View") // Debugging
+
+        classesCollectionView.delegate = self
+        classesCollectionView.dataSource = self
+
+        // Register a UICollectionViewCell if not done in the storyboard
+        classesCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ClassCell")
     }
     
 
