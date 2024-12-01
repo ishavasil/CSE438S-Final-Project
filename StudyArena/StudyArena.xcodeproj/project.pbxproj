@@ -10,6 +10,9 @@
 		522D43EA2CE4184500EF9136 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 522D43E92CE4184500EF9136 /* FirebaseCore */; };
 		522D43EC2CE4184500EF9136 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 522D43EB2CE4184500EF9136 /* FirebaseDatabase */; };
 		522D43EE2CE4184500EF9136 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 522D43ED2CE4184500EF9136 /* FirebaseFirestore */; };
+		52FF01C92CFCDA2500A6FEDA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 52FF01C82CFCDA2500A6FEDA /* FirebaseFirestore */; };
+		52FF01CB2CFCDBA300A6FEDA /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 52FF01CA2CFCDBA300A6FEDA /* FirebaseCore */; };
+		52FF01CD2CFCDBA300A6FEDA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 52FF01CC2CFCDBA300A6FEDA /* FirebaseFirestore */; };
 		5A5426012CFA81C1006781AE /* ClassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5426002CFA81C1006781AE /* ClassData.swift */; };
 		5A5426032CFA8416006781AE /* SelectCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5426022CFA8416006781AE /* SelectCourseViewController.swift */; };
 		5AB29D962CDBE2D700B87DA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AB29D952CDBE2D700B87DA7 /* GoogleService-Info.plist */; };
@@ -73,7 +76,10 @@
 				522D43EC2CE4184500EF9136 /* FirebaseDatabase in Frameworks */,
 				522D43EE2CE4184500EF9136 /* FirebaseFirestore in Frameworks */,
 				522D43EA2CE4184500EF9136 /* FirebaseCore in Frameworks */,
+				52FF01C92CFCDA2500A6FEDA /* FirebaseFirestore in Frameworks */,
+				52FF01CB2CFCDBA300A6FEDA /* FirebaseCore in Frameworks */,
 				5AB29D992CDBE40900B87DA7 /* FirebaseAnalytics in Frameworks */,
+				52FF01CD2CFCDBA300A6FEDA /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +100,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52FF01C72CFCD9BA00A6FEDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C8CB317B2CDBDA89009D58CD = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +114,7 @@
 				C8CB319D2CDBDA8A009D58CD /* StudyArenaTests */,
 				C8CB31A72CDBDA8A009D58CD /* StudyArenaUITests */,
 				C8CB31852CDBDA89009D58CD /* Products */,
+				52FF01C72CFCD9BA00A6FEDA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,6 +185,9 @@
 				522D43E92CE4184500EF9136 /* FirebaseCore */,
 				522D43EB2CE4184500EF9136 /* FirebaseDatabase */,
 				522D43ED2CE4184500EF9136 /* FirebaseFirestore */,
+				52FF01C82CFCDA2500A6FEDA /* FirebaseFirestore */,
+				52FF01CA2CFCDBA300A6FEDA /* FirebaseCore */,
+				52FF01CC2CFCDBA300A6FEDA /* FirebaseFirestore */,
 			);
 			productName = StudyArena;
 			productReference = C8CB31842CDBDA89009D58CD /* StudyArena.app */;
@@ -666,6 +683,18 @@
 			productName = FirebaseDatabase;
 		};
 		522D43ED2CE4184500EF9136 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFirestore;
+		};
+		52FF01C82CFCDA2500A6FEDA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFirestore;
+		};
+		52FF01CA2CFCDBA300A6FEDA /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseCore;
+		};
+		52FF01CC2CFCDBA300A6FEDA /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseFirestore;
 		};

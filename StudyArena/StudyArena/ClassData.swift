@@ -7,11 +7,15 @@
 
 import Foundation
 
+
 struct ClassData {
-    let id: String
-    let assistant: String
-    let averageScore: Int
-    let highScore: Int
-    let lowScore: Int
-    let quizzesTaken: Int
+    var id: String
+    var assistant: String
+    var averageScore: Int
+    var highScore: Int
+    var lowScore: Int
+    var quizzesTaken: Int
+    var thread: String
+    var vector: String
+    var fileIds: [String]
 }
