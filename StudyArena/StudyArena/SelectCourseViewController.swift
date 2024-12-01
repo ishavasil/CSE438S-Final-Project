@@ -18,9 +18,11 @@ class SelectCourseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         if let data = classData {
-            courseNameLabel.text = data.id
-            
-        }
+                print("viewDidLoad: \(data.id)") // Debugging
+                courseNameLabel.text = data.id
+            } else {
+                print("viewDidLoad: classData is nil")
+            }
     }
     
 

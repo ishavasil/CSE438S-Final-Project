@@ -9,13 +9,16 @@ import UIKit
 import FirebaseFirestore
 import FirebaseDatabase
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
     
     
     
     @IBOutlet weak var classesCollectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var ref: DatabaseReference!
     var classes: [ClassData] = [] // Array to hold fetched class data
+    var filteredClasses: [ClassData] = []
     
     let ai = OpenAIService()
     
@@ -30,6 +33,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         setupCollectionView()
         fetchClassesData()
+        setupSearchBar()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.addClassData(classID: "cse131", assistant: "asst_R98EZmBJAJITwPBicjQhTaEx", averageScore: 14, highScore: 15, lowScore: 13, quizzesTaken: 10)
@@ -40,6 +44,28 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     }
+    
+    func setupCollectionView() {
+        print("Setting up Collection View") // Debugging
+
+        classesCollectionView.delegate = self
+        classesCollectionView.dataSource = self
+
+        // Register a UICollectionViewCell if not done in the storyboard
+        classesCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ClassCell")
+    }
+    
+    func setupSearchBar() {
+            searchBar.delegate = self
+    }
+    
+    @IBAction func addNewCourseTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let addCourseVC = storyboard.instantiateViewController(withIdentifier: "AddCourseViewController") as? AddCourseViewController {
+            self.navigationController?.pushViewController(addCourseVC, animated: true)
+        }
+    }
+
     
     func fetchClassesData() {
         let classesRef = ref.child("classes")
@@ -78,7 +104,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
             }
             self.classes = fetchedClasses
-
+            self.filteredClasses = fetchedClasses // Initially show all classes
             DispatchQueue.main.async {
                 self.classesCollectionView.reloadData()
             }
@@ -86,24 +112,28 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @objc func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return classes.count
+            return filteredClasses.count
         }
 
-    @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ClassCell", for: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ClassCell", for: indexPath)
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() } // Clear previous content
 
-            // Customize the cell
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() } // Clear previous content
-            let label = UILabel(frame: cell.contentView.bounds)
-            label.text = classes[indexPath.item].id
-            label.textAlignment = .center
-            cell.contentView.addSubview(label)
+        // Configure the label
+        let label = UILabel(frame: cell.contentView.bounds)
+        label.text = filteredClasses[indexPath.item].id // Display course name
+        label.textAlignment = .center
+        label.numberOfLines = 0 // Allow multiline text
+        label.lineBreakMode = .byWordWrapping
 
-            cell.contentView.backgroundColor = .lightGray
-            cell.layer.cornerRadius = 8
+        cell.contentView.addSubview(label)
 
-            return cell
-        }
+        cell.contentView.backgroundColor = .lightGray
+        cell.layer.cornerRadius = 8
+
+        return cell
+    }
+
 
         // MARK: - UICollectionViewDelegate
 
@@ -119,22 +149,55 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ShowSelectCourseSegue", sender: nil)
+        let selectedClass = filteredClasses[indexPath.item] // Use filteredClasses for search compatibility
+        print("didSelectItemAt: \(selectedClass.id)") // Debugging
+        performSegue(withIdentifier: "ShowSelectCourseSegue", sender: selectedClass)
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowSelectCourseSegue" {
             if let detailVC = segue.destination as? SelectCourseViewController,
-               let indexPath = classesCollectionView.indexPathsForSelectedItems?.first {
-                let selectedClass = classes[indexPath.item]
+               let selectedClass = sender as? ClassData { // Retrieve the passed ClassData object
                 print("Selected class: \(selectedClass.id)") // Debugging
                 // Pass the selected class data to the SelectCourseViewController
                 detailVC.modalPresentationStyle = .fullScreen
-                detailVC.classData = classes[indexPath.row]
+                detailVC.classData = selectedClass
             }
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // Set a fixed size for all cells
+        let width = collectionView.bounds.width - 20 // Add padding if needed
+        let height: CGFloat = 100 // Set a uniform height for all cells
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10 // Spacing between rows
+    }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0 // Spacing between items in the same row
+    }
+
+    
+
+    
+    // MARK: - UISearchBarDelegate
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            // Show all classes if search text is empty
+            filteredClasses = classes
+        } else {
+            // Filter classes based on the search query
+            filteredClasses = classes.filter { $0.id.lowercased().contains(searchText.lowercased()) }
+        }
+        classesCollectionView.reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // Dismiss the keyboard when search is pressed
+    }
 
 
     
@@ -158,17 +221,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
     }
-    
-    func setupCollectionView() {
-        print("Setting up Collection View") // Debugging
-
-        classesCollectionView.delegate = self
-        classesCollectionView.dataSource = self
-
-        // Register a UICollectionViewCell if not done in the storyboard
-        classesCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ClassCell")
-    }
-    
 
     
     
