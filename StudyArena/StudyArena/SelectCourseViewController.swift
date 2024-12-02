@@ -9,7 +9,10 @@ import UIKit
 
 class SelectCourseViewController: UIViewController {
 
+    
+    @IBOutlet weak var takeQuiz: UIButton!
     @IBOutlet weak var courseNameLabel: UILabel!
+    
     var classData: ClassData? // Add this to hold the selected course data
 
     
