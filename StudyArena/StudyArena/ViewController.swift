@@ -17,7 +17,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var searchBar: UISearchBar!
     
     var ref: DatabaseReference!
-    var classes: [ClassData] = [] // Array to hold fetched class data
+    var classes: [ClassData] = []
     var filteredClasses: [ClassData] = []
     
     let ai = OpenAIService()
@@ -51,7 +51,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         classesCollectionView.delegate = self
         classesCollectionView.dataSource = self
 
-        // Register a UICollectionViewCell if not done in the storyboard
         classesCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ClassCell")
     }
     
@@ -104,7 +103,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
             }
             self.classes = fetchedClasses
-            self.filteredClasses = fetchedClasses // Initially show all classes
+            self.filteredClasses = fetchedClasses // initially show all classes
             DispatchQueue.main.async {
                 self.classesCollectionView.reloadData()
             }
@@ -117,13 +116,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ClassCell", for: indexPath)
-        cell.contentView.subviews.forEach { $0.removeFromSuperview() } // Clear previous content
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
 
-        // Configure the label
+        // setup label
         let label = UILabel(frame: cell.contentView.bounds)
-        label.text = filteredClasses[indexPath.item].id // Display course name
+        label.text = filteredClasses[indexPath.item].id
         label.textAlignment = .center
-        label.numberOfLines = 0 // Allow multiline text
+        label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
 
         cell.contentView.addSubview(label)
@@ -149,38 +148,38 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedClass = filteredClasses[indexPath.item] // Use filteredClasses for search compatibility
+        let selectedClass = filteredClasses[indexPath.item]
         print("didSelectItemAt: \(selectedClass.id)") // Debugging
         performSegue(withIdentifier: "ShowSelectCourseSegue", sender: selectedClass)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowSelectCourseSegue" {
-            if let detailVC = segue.destination as? SelectCourseViewController,
-               let selectedClass = sender as? ClassData { // Retrieve the passed ClassData object
-                print("Selected class: \(selectedClass.id)") // Debugging
-                // Pass the selected class data to the SelectCourseViewController
-                detailVC.modalPresentationStyle = .fullScreen
+            if let navigationController = segue.destination as? UINavigationController,
+               let detailVC = navigationController.topViewController as? SelectCourseViewController,
+               let selectedClass = sender as? ClassData {
+                // Debugging print statements
+                print("Selected class: \(selectedClass.id)")
+                
                 detailVC.classData = selectedClass
             }
         }
     }
+
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // Set a fixed size for all cells
-        let width = collectionView.bounds.width - 20 // Add padding if needed
-        let height: CGFloat = 100 // Set a uniform height for all cells
+        let width = collectionView.bounds.width - 20
+        let height: CGFloat = 100
         return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10 // Spacing between rows
+        return 10
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0 // Spacing between items in the same row
+        return 0
     }
-
-    
 
     
     // MARK: - UISearchBarDelegate
@@ -189,19 +188,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             // Show all classes if search text is empty
             filteredClasses = classes
         } else {
-            // Filter classes based on the search query
             filteredClasses = classes.filter { $0.id.lowercased().contains(searchText.lowercased()) }
         }
         classesCollectionView.reloadData()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder() // Dismiss the keyboard when search is pressed
+        searchBar.resignFirstResponder()
     }
 
-
-    
-    
     func addClassData(classID: String, assistant: String, averageScore: Int, highScore: Int, lowScore: Int, quizzesTaken: Int) {
         let classData: [String: Any] = [
             "assistant": assistant,

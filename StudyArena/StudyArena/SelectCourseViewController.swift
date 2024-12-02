@@ -13,7 +13,10 @@ class SelectCourseViewController: UIViewController {
     @IBOutlet weak var takeQuiz: UIButton!
     @IBOutlet weak var courseNameLabel: UILabel!
     
-    var classData: ClassData? // Add this to hold the selected course data
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var classTopScore: UILabel!
+    @IBOutlet weak var classAvgScore: UILabel!
+    var classData: ClassData? 
 
     
     override func viewDidLoad() {
@@ -21,11 +24,13 @@ class SelectCourseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         if let data = classData {
-                print("viewDidLoad: \(data.id)") // Debugging
-                courseNameLabel.text = data.id
-            } else {
-                print("viewDidLoad: classData is nil")
-            }
+            print("viewDidLoad: \(data.id)") // Debugging
+            courseNameLabel.text = data.id
+            classTopScore.text = "Class Top Score: \(data.highScore)%"
+            classAvgScore.text = "Class Avg Score: \(data.averageScore)%"
+        } else {
+            print("viewDidLoad: classData is nil")
+        }
     }
     
 

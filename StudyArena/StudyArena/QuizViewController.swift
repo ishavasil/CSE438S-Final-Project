@@ -5,6 +5,7 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var questionNumberLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startQuizButton: UIButton!
+    
 
     let dummyQuestions: [QuizQuestion] = [
         QuizQuestion(
@@ -40,14 +41,16 @@ class QuizViewController: UIViewController {
     var timeRemaining: Int = 150
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        updateUIForQuizState(started: false)
+        //super.viewDidLoad()
+//        updateUIForQuizState(started: false)
         questions = dummyQuestions
     }
 
     @IBAction func startQuizTapped(_ sender: UIButton) {
+        print("start Quiz tapped")
         resetQuiz()
         startQuiz()
+        
     }
 
     func resetQuiz() {
@@ -57,6 +60,7 @@ class QuizViewController: UIViewController {
     }
 
     func startQuiz() {
+        print("start Quiz triggered")
         questions = dummyQuestions
         updateUIForQuizState(started: true)
         showNextQuestion()
@@ -67,7 +71,6 @@ class QuizViewController: UIViewController {
         if currentQuestionIndex < questions.count {
             let question = questions[currentQuestionIndex]
 
-            // Instantiate QuestionViewController
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let questionVC = storyboard.instantiateViewController(withIdentifier: "QuestionViewController") as? QuestionViewController {
                 questionVC.questionData = question
@@ -77,6 +80,7 @@ class QuizViewController: UIViewController {
 
                     if isCorrect {
                         self.correctAnswers += 1
+                        print("correct answer")
                     }
 
                     self.currentQuestionIndex += 1
@@ -87,11 +91,8 @@ class QuizViewController: UIViewController {
                         self.showQuizEndScreen()
                     }
                 }
-
-                // Push the QuestionViewController to create a fast transition
-                if let navController = self.navigationController {
-                    navController.pushViewController(questionVC, animated: false)
-                }
+                
+                self.navigationController!.pushViewController(questionVC, animated: true)
             }
         }
     }
@@ -104,10 +105,14 @@ class QuizViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let quizEndVC = storyboard.instantiateViewController(withIdentifier: "QuizEndViewController") as? QuizEndViewController {
             quizEndVC.finalScore = correctAnswers
+            
             navigationController?.pushViewController(quizEndVC, animated: true)
         }
     }
 
+    
+
+    
     func startTimer() {
         guard quizTimer == nil else { return }
         timerLabel.isHidden = false

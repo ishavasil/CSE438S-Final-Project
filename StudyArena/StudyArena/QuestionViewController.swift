@@ -20,6 +20,7 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("questionData");
         
         if let question = questionData {
             questionNumberLabel.text = "Question \(questionNumber)/10"
@@ -89,12 +90,8 @@ class QuestionViewController: UIViewController {
         timer?.invalidate()
         timer = nil
         
-        // Call the completion handler to pass back the result
         completionHandler?(isCorrect)
         
-        // Instead of dismissing, let QuizViewController handle the next question immediately
-        if let navController = self.navigationController {
-            navController.popViewController(animated: false)
-        }
+       
     }
 }
