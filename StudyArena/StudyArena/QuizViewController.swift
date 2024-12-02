@@ -71,7 +71,6 @@ class QuizViewController: UIViewController {
         if currentQuestionIndex < questions.count {
             let question = questions[currentQuestionIndex]
 
-            // Instantiate QuestionViewController
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let questionVC = storyboard.instantiateViewController(withIdentifier: "QuestionViewController") as? QuestionViewController {
                 questionVC.questionData = question
@@ -81,6 +80,7 @@ class QuizViewController: UIViewController {
 
                     if isCorrect {
                         self.correctAnswers += 1
+                        print("correct answer")
                     }
 
                     self.currentQuestionIndex += 1
@@ -101,13 +101,15 @@ class QuizViewController: UIViewController {
     func showQuizEndScreen() {
         updateUIForQuizState(started: false)
         stopTimer()
-        self.navigationController?.popToRootViewController(animated: true)
+
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let quizEndVC = storyboard.instantiateViewController(withIdentifier: "QuizEndViewController") as? QuizEndViewController {
             quizEndVC.finalScore = correctAnswers
+            
             navigationController?.pushViewController(quizEndVC, animated: true)
         }
     }
+
     
 
     

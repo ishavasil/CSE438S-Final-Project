@@ -13,25 +13,27 @@ class QuizEndViewController: UIViewController {
     //@IBOutlet weak var restartButton: UIButton! // Button to restart the quiz
     //@IBOutlet weak var mainMenuButton: UIButton! // Button to return to the main menu
 
-    var finalScore: Int = 0 // The score passed from QuizViewController
-    var totalQuestions: Int = 0 // Total number of questions in the quiz
+    @IBOutlet weak var messageLabel: UILabel!
+    var finalScore: Int = 0
+    var totalQuestions: Int = 10
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the score label
-        scoreLabel.text = "\(finalScore) / \(totalQuestions)"
+        scoreLabel.text = "\(finalScore*10)%"
 
+        if finalScore == totalQuestions {
+            messageLabel.text = "Perfect score! You're a genius!"
+        } else if finalScore > totalQuestions / 2 {
+            messageLabel.text = "Great job! Keep up the good work!"
+        } else {
+            messageLabel.text = "Good effort! Practice makes perfect!"
+        }
     }
-//
-//    // Restart the quiz
-    @IBAction func restartQuizTapped(_ sender: UIButton) {
+
+    @IBAction func returnTapped(_ sender: UIButton) {
         navigationController?.popToRootViewController(animated: true)
     }
 
-    // Return to the main menu
-    @IBAction func mainMenuTapped(_ sender: UIButton) {
-        // Navigate back to the main menu
-        navigationController?.popToRootViewController(animated: true)
-    }
+
 }
