@@ -41,14 +41,16 @@ class QuizViewController: UIViewController {
     var timeRemaining: Int = 150
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        updateUIForQuizState(started: false)
+        //super.viewDidLoad()
+//        updateUIForQuizState(started: false)
         questions = dummyQuestions
     }
 
     @IBAction func startQuizTapped(_ sender: UIButton) {
+        print("start Quiz tapped")
         resetQuiz()
         startQuiz()
+        
     }
 
     func resetQuiz() {
@@ -58,6 +60,7 @@ class QuizViewController: UIViewController {
     }
 
     func startQuiz() {
+        print("start Quiz triggered")
         questions = dummyQuestions
         updateUIForQuizState(started: true)
         showNextQuestion()
@@ -88,11 +91,8 @@ class QuizViewController: UIViewController {
                         self.showQuizEndScreen()
                     }
                 }
-
-                // Push the QuestionViewController to create a fast transition
-                if let navController = self.navigationController {
-                    navController.pushViewController(questionVC, animated: false)
-                }
+                
+                self.navigationController!.pushViewController(questionVC, animated: true)
             }
         }
     }
@@ -101,14 +101,16 @@ class QuizViewController: UIViewController {
     func showQuizEndScreen() {
         updateUIForQuizState(started: false)
         stopTimer()
-
+        self.navigationController?.popToRootViewController(animated: true)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let quizEndVC = storyboard.instantiateViewController(withIdentifier: "QuizEndViewController") as? QuizEndViewController {
             quizEndVC.finalScore = correctAnswers
             navigationController?.pushViewController(quizEndVC, animated: true)
         }
     }
+    
 
+    
     func startTimer() {
         guard quizTimer == nil else { return }
         timerLabel.isHidden = false

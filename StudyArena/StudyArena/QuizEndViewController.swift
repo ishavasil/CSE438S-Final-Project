@@ -20,18 +20,18 @@ class QuizEndViewController: UIViewController {
         super.viewDidLoad()
         
         // Set the score label
-        scoreLabel.text = "Your Score: \(finalScore) / \(totalQuestions)"
+        scoreLabel.text = "\(finalScore) / \(totalQuestions)"
 
     }
 //
 //    // Restart the quiz
-//    @IBAction func restartQuizTapped(_ sender: UIButton) {
-//        navigationController?.popToRootViewController(animated: true)
-//    }
-//
-//    // Return to the main menu
-//    @IBAction func mainMenuTapped(_ sender: UIButton) {
-//        // Navigate back to the main menu
-//        navigationController?.popToRootViewController(animated: true)
-//    }
+    @IBAction func restartQuizTapped(_ sender: UIButton) {
+        navigationController?.popToRootViewController(animated: true)
+    }
+
+    // Return to the main menu
+    @IBAction func mainMenuTapped(_ sender: UIButton) {
+        // Navigate back to the main menu
+        navigationController?.popToRootViewController(animated: true)
+    }
 }

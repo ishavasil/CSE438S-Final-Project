@@ -69,7 +69,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <segue destination="Sgg-nH-08f" kind="show" identifier="ShowSelectCourseSegue" id="HOF-eW-2LY"/>
+                                            <segue destination="HNZ-Pa-xs5" kind="presentation" identifier="ShowSelectCourseSegue" modalPresentationStyle="fullScreen" id="HOF-eW-2LY"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -102,6 +102,7 @@
                             <constraint firstItem="Fhg-HY-peP" firstAttribute="centerX" secondItem="cLQ-L7-mte" secondAttribute="centerX" id="wQl-nX-wdk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="99a-B8-Qlh"/>
                     <connections>
                         <outlet property="classesCollectionView" destination="cLQ-L7-mte" id="WO0-bE-auG"/>
                         <outlet property="searchBar" destination="0Af-tW-4Fz" id="CiE-Pa-Bft"/>
@@ -109,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-16.030534351145036" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="910.68702290076328" y="3.5211267605633805"/>
         </scene>
         <!--Select Course View-->
         <scene sceneID="shB-Gb-nw8">
@@ -148,7 +149,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Competitive Mode"/>
                                 <connections>
-                                    <segue destination="Bw0-X2-yzd" kind="presentation" modalPresentationStyle="fullScreen" id="8Bd-Fh-epO"/>
+                                    <segue destination="hmh-Ti-NXL" kind="presentation" modalPresentationStyle="fullScreen" id="ywf-CZ-9lr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-QQ-B77">
@@ -232,24 +233,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VUB-jq-fjb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="835.87786259541986" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="2689.3129770992364" y="3.5211267605633805"/>
         </scene>
         <!--Question View-->
         <scene sceneID="lM1-DE-JRx">
             <objects>
                 <viewController storyboardIdentifier="QuestionViewController" id="t8P-Sx-22k" userLabel="Question View" customClass="QuestionViewController" customModule="StudyArena" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WvD-xS-gam">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Computer Science" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTw-eA-lIt">
-                                <rect key="frame" x="119" y="72" width="155" height="27"/>
+                                <rect key="frame" x="119" y="131" width="155" height="27"/>
                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-hw-778">
-                                <rect key="frame" x="25" y="68" width="77" height="35"/>
+                                <rect key="frame" x="25" y="127" width="77" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="&lt; Back"/>
                             </button>
@@ -294,7 +295,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCs-ej-ZfI">
-                                <rect key="frame" x="46" y="473" width="299" height="38.666666666666686"/>
+                                <rect key="frame" x="46" y="483" width="299" height="38.666666666666629"/>
                                 <color key="tintColor" red="0.78734705419999995" green="0.65611647989999999" blue="0.48516080969999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="O(n)">
@@ -305,7 +306,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qih-PC-U2n">
-                                <rect key="frame" x="46" y="534" width="299" height="38.666666666666629"/>
+                                <rect key="frame" x="46" y="544" width="299" height="38.666666666666629"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38.666666666666629" id="lxw-Cm-qbu"/>
                                 </constraints>
@@ -319,7 +320,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evV-CH-aD9">
-                                <rect key="frame" x="47" y="603" width="299" height="35"/>
+                                <rect key="frame" x="47" y="613" width="299" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="VOd-Cf-g2B"/>
                                 </constraints>
@@ -333,7 +334,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jm9-HH-b67">
-                                <rect key="frame" x="46" y="670" width="299" height="35"/>
+                                <rect key="frame" x="46" y="680" width="299" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Erh-LX-cFz"/>
                                 </constraints>
@@ -397,12 +398,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G4r-gC-hBr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2606.8702290076335" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="5168.7022900763359" y="3.5211267605633805"/>
         </scene>
         <!--Quiz End View Controller-->
         <scene sceneID="Ghr-DO-aDD">
             <objects>
-                <viewController id="D1O-NS-T8M" customClass="QuizEndViewController" customModule="StudyArena" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QuizEndViewController" id="D1O-NS-T8M" customClass="QuizEndViewController" customModule="StudyArena" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cgb-cl-bMV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -470,23 +471,34 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nz-D7-E8b">
+                                <rect key="frame" x="98" y="711" width="196" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Return to Course Page"/>
+                                <connections>
+                                    <action selector="restartQuizTapped:" destination="D1O-NS-T8M" eventType="touchUpInside" id="6Me-i5-lzV"/>
+                                    <action selector="returnToCoursePage:" destination="qzc-mA-DdO" eventType="touchUpInside" id="k3X-yp-pHH"/>
+                                    <segue destination="Sgg-nH-08f" kind="presentation" modalPresentationStyle="fullScreen" id="ZPO-K0-Q8H"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PDN-nj-dNf"/>
                         <color key="backgroundColor" red="0.95161165849999996" green="0.91054242220000003" blue="0.80830584370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
-                        <outlet property="finalScoreLabel" destination="tIi-eh-gw1" id="prV-fs-8lx"/>
                         <outlet property="scoreLabel" destination="tIi-eh-gw1" id="gGb-Y5-lMQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oce-2u-Our" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="qzc-mA-DdO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3473" y="4"/>
+            <point key="canvasLocation" x="6037.4045801526718" y="3.5211267605633805"/>
         </scene>
         <!--Add Course View Controller-->
         <scene sceneID="hGn-ic-AR2">
             <objects>
-                <viewController restorationIdentifier="AddCourseViewController" storyboardIdentifier="AddCourseViewController" id="G3d-sy-Upu" customClass="AddCourseViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddCourseViewController" id="G3d-sy-Upu" customClass="AddCourseViewController" customModule="StudyArena" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q43-e8-M7y">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -584,18 +596,18 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Computer Science" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAD-Gg-dYf">
-                                        <rect key="frame" x="119" y="72" width="155" height="27"/>
+                                        <rect key="frame" x="119" y="116" width="155" height="27"/>
                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="19"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qa6-Gd-aRa">
-                                        <rect key="frame" x="25" y="68" width="77" height="35"/>
+                                        <rect key="frame" x="25" y="112" width="77" height="35"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="&lt; Back"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG9-9n-aIR">
-                                        <rect key="frame" x="159" y="107" width="75" height="52"/>
+                                        <rect key="frame" x="159" y="151" width="75" height="52"/>
                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="37"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -634,7 +646,6 @@
                                         <buttonConfiguration key="configuration" style="filled" title="Start Quiz"/>
                                         <connections>
                                             <action selector="startQuizTapped:" destination="Bw0-X2-yzd" eventType="touchUpInside" id="eVH-L6-mP4"/>
-                                            <segue destination="t8P-Sx-22k" kind="show" animates="NO" id="Swj-4k-JRy"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -675,9 +686,49 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ShV-dL-PAF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1716.7938931297708" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="4408.3969465648852" y="3.5211267605633805"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Rlq-jZ-SAB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HNZ-Pa-xs5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="db5-58-PC9"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="se0-B1-eb6">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Sgg-nH-08f" kind="relationship" relationship="rootViewController" id="jaN-5a-Dpl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="koG-Kc-tWJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1762.5954198473282" y="3.5211267605633805"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XR4-PT-kgf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hmh-Ti-NXL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZyM-1e-75m">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bw0-X2-yzd" kind="relationship" relationship="rootViewController" id="Pnx-aa-Hwc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Txw-ft-Ncl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3481.679389312977" y="3.5211267605633805"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ZPO-K0-Q8H"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
