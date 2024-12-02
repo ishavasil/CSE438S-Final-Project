@@ -431,11 +431,13 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nz-D7-E8b">
                                 <rect key="frame" x="98" y="711" width="197" height="71"/>
+                                <color key="backgroundColor" red="0.37529971249999999" green="0.49593172140000003" blue="0.52041997090000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="71" id="eQ6-7y-byg"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Return to Course Page"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Return to Course Page"/>
                                 <connections>
                                     <action selector="returnTapped:" destination="D1O-NS-T8M" eventType="touchUpInside" id="DiB-Wb-HIt"/>
                                     <action selector="returnToCoursePage:" destination="qzc-mA-DdO" eventType="touchUpInside" id="k3X-yp-pHH"/>
@@ -484,11 +486,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Course Name..." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-sS-rOd">
-                                <rect key="frame" x="74.666666666666686" y="177" width="244" height="42"/>
-                                <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="23"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X3N-da-Usl">
                                 <rect key="frame" x="123.66666666666669" y="628" width="146" height="47.666666666666629"/>
                                 <color key="tintColor" red="0.62352943419999995" green="0.81960785390000002" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -549,19 +546,25 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="U3M-wD-Hsi"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Course Name..." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-sS-rOd">
+                                <rect key="frame" x="74" y="201" width="244" height="42"/>
+                                <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="23"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hzj-ae-6Ay"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="q9V-9q-rIO" firstAttribute="centerX" secondItem="X3N-da-Usl" secondAttribute="centerX" id="4fU-0Z-aUb"/>
                             <constraint firstItem="bga-4h-Wib" firstAttribute="leading" secondItem="Hzj-ae-6Ay" secondAttribute="leading" constant="59" id="5ge-Wd-jwk"/>
-                            <constraint firstItem="q9V-9q-rIO" firstAttribute="top" secondItem="2vx-sS-rOd" secondAttribute="bottom" constant="50" id="5jd-ga-G3c"/>
+                            <constraint firstItem="q9V-9q-rIO" firstAttribute="top" secondItem="2vx-sS-rOd" secondAttribute="bottom" constant="26" id="5jd-ga-G3c"/>
                             <constraint firstItem="q9V-9q-rIO" firstAttribute="centerX" secondItem="2vx-sS-rOd" secondAttribute="centerX" id="E9K-S9-2v3"/>
                             <constraint firstItem="X3N-da-Usl" firstAttribute="top" secondItem="q9V-9q-rIO" secondAttribute="bottom" constant="87" id="HzB-IR-ieU"/>
                             <constraint firstItem="q9V-9q-rIO" firstAttribute="centerX" secondItem="bga-4h-Wib" secondAttribute="centerX" id="JPq-tU-lbn"/>
                             <constraint firstItem="q9V-9q-rIO" firstAttribute="top" secondItem="Q43-e8-M7y" secondAttribute="top" constant="269" id="QzF-vO-OMk"/>
                             <constraint firstItem="mZQ-t8-Fxb" firstAttribute="leading" secondItem="Hzj-ae-6Ay" secondAttribute="leading" constant="6" id="Seo-Bf-p08"/>
                             <constraint firstItem="mZQ-t8-Fxb" firstAttribute="top" secondItem="Hzj-ae-6Ay" secondAttribute="top" constant="43" id="Yod-t3-nSM"/>
+                            <constraint firstItem="2vx-sS-rOd" firstAttribute="top" secondItem="bga-4h-Wib" secondAttribute="bottom" constant="61" id="eFh-r1-m0J"/>
                             <constraint firstItem="bga-4h-Wib" firstAttribute="top" secondItem="Hzj-ae-6Ay" secondAttribute="top" constant="89" id="ldu-oh-Lc4"/>
                             <constraint firstItem="Hzj-ae-6Ay" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mZQ-t8-Fxb" secondAttribute="trailing" symbolic="YES" id="pvE-p4-8qe"/>
                             <constraint firstItem="q9V-9q-rIO" firstAttribute="centerX" secondItem="Q43-e8-M7y" secondAttribute="centerX" id="sC4-2G-lZQ"/>
@@ -613,9 +616,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q0v-wD-9tR">
-                                        <rect key="frame" x="146.33333333333334" y="388" width="100.66666666666666" height="34.333333333333314"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Start Quiz"/>
+                                        <rect key="frame" x="146.33333333333334" y="388" width="100.33333333333334" height="34.333333333333314"/>
+                                        <color key="backgroundColor" red="0.37529971249999999" green="0.49593172140000003" blue="0.52041997090000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Start Quiz"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Start Quiz"/>
                                         <connections>
                                             <action selector="startQuizTapped:" destination="Bw0-X2-yzd" eventType="touchUpInside" id="eVH-L6-mP4"/>
                                         </connections>
@@ -713,7 +719,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZPO-K0-Q8H"/>
+        <segue reference="ptc-12-orn"/>
         <segue reference="U3M-wD-Hsi"/>
     </inferredMetricsTieBreakers>
     <resources>
