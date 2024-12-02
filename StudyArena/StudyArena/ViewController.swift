@@ -36,8 +36,11 @@ class ViewController: UIViewController {
 //        fetchClassesData()
 //        setupSearchBar()
         
+//        self.setAverageScore(classID: "cse132", newScore: 91)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            self.addClassData(classID: "cse131", thread: "thread", vector: "vector", averageScore: 14, highScore: 15, lowScore: 13, quizzesTaken: 10, fileIds: ["file1", "file2"])
+//            self.readAverageScore(classID: "cse132")
+//            self.addClassData(classID: "cse131", thread: "thread", vector: "vector", averageScore: 14, highScore: 15, quizzesTaken: 10, fileIds: ["file1", "file2"])
 //            self.appendFile(classID: "cse131", newFileID: "newFile")
 //            self.readFiles(classID: "cse131")
 //            self.deleteFile(classID: "cse131", fileIdToDelete: "newFile4")
@@ -52,6 +55,218 @@ class ViewController: UIViewController {
 //        }
         
     }
+    
+    // call function and it will print out all of the classObjects
+    func fetchClassesData() {
+        let classesRef = ref.child("classes")
+        
+        classesRef.observeSingleEvent(of: .value) { snapshot in
+            var fetchedClasses: [ClassData] = []
+            
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot, let classData = childSnapshot.value as? [String: Any] {
+                    
+                    let classID = childSnapshot.key
+                    
+                    let assistant = classData["assistant"] as? String ?? "N/A"
+                    let averageScore = classData["averageScore"] as? Int ?? 0
+                    let highScore = classData["highScore"] as? Int ?? 0
+                    let quizzesTaken = classData["quizzesTaken"] as? Int ?? 0
+                    let thread = classData["thread"] as? String ?? "No thread"
+                    let vector = classData["vector"] as? String ?? "No vector"
+                    
+                    var fileIds: [String] = []
+                    
+                    if let fileIdsArray = classData["fileIds"] as? [Any] {
+                        fileIds = fileIdsArray.compactMap { $0 as? String }
+                    }
+                                        
+                    let classObject = ClassData(
+                        id: classID,
+                        assistant: assistant,
+                        averageScore: averageScore,
+                        highScore: highScore,
+                        quizzesTaken: quizzesTaken,
+                        thread: thread,
+                        vector: vector,
+                        fileIds: fileIds
+                    )
+                    
+                    fetchedClasses.append(classObject)
+                }
+            }
+            
+            print(fetchedClasses)
+        }
+    }
+    
+    
+    // call function with class data and it will add the new class to the database (will probably add classes with scores and quizzes taken set to 0)
+    func addClassData(classID: String, thread: String, vector: String, averageScore: Int, highScore: Int, quizzesTaken: Int, fileIds: [String]) {
+        let fileIdsDict = Dictionary(uniqueKeysWithValues: fileIds.enumerated().map { (index, fileId) in
+            (String(index + 1), fileId)
+        })
+        
+        let classData: [String: Any] = [
+            "thread": thread,
+            "vector": vector,
+            "averageScore": averageScore,
+            "highScore": highScore,
+            "quizzesTaken": quizzesTaken,
+            "fileIds": fileIdsDict
+        ]
+        
+        ref.child("classes").child(classID).setValue(classData)
+    }
+    
+    // call function with class id and the new file id and it will add the new file id to the fileIds field of the class
+    func appendFile(classID: String, newFileID: String) {
+        let fileIdsRef = ref.child("classes").child(classID).child("fileIds")
+        
+        fileIdsRef.observeSingleEvent(of: .value) { snapshot in
+            
+            var updatedFileIds: [String: String] = [:]
+            
+            if let fileIdsArray = snapshot.value as? [Any] {
+                var index = 1
+                for fileId in fileIdsArray {
+                    if let fileIdStr = fileId as? String {
+                        updatedFileIds[String(index)] = fileIdStr
+                        index += 1
+                    }
+                }
+            }
+            
+            let nextKey = String((updatedFileIds.keys.compactMap { Int($0) }.max() ?? 0) + 1)
+            
+            updatedFileIds[nextKey] = newFileID
+            
+            fileIdsRef.setValue(updatedFileIds)
+        }
+    }
+    
+    // call function with the class id and it will print out all the file ids in that class
+    func readFiles(classID: String) {
+        let classRef = ref.child("classes").child(classID).child("fileIds")
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let fileIdsArray = snapshot.value as? [Any] {
+                let fileIds = fileIdsArray.compactMap { $0 as? String }
+                print("File IDs for class \(classID): \(fileIds)")
+            }
+        }
+    }
+
+    
+    // call function with class id and file id and it will delete the file id from the fileIds field of that class
+    func deleteFile(classID: String, fileIdToDelete: String) {
+        let classRef = ref.child("classes").child(classID).child("fileIds")
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let fileIdsArray = snapshot.value as? [Any] {
+                
+                var updatedFileIds = fileIdsArray.compactMap { $0 as? String }.filter { $0 != "<null>" }
+                
+                updatedFileIds = updatedFileIds.filter { $0 != fileIdToDelete }
+                
+                classRef.setValue(updatedFileIds)
+            }
+        }
+    }
+    
+    // call function with class id and vector and it will update the class' vector field with the new vector
+    func setVector(classID: String, newVector: String) {
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.updateChildValues(["vector": newVector])
+    }
+    
+    // call function with class id and it will print out the vector of the class
+    func readVector(classID: String) {
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let classData = snapshot.value as? [String: Any], let vector = classData["vector"] as? String {
+                print("Vector for class \(classID): \(vector)")
+            }
+        }
+    }
+    
+    
+    // call function with class id and thread and it will update the class' thread with the new thread
+    func setThread(classID: String, newThread: String) {
+        
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.updateChildValues(["thread": newThread])
+    }
+    
+    
+    // call function with class id and it will print out the thread of the class
+    func readThread(classID: String) {
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let classData = snapshot.value as? [String: Any], let thread = classData["thread"] as? String {
+                print("Thread for class \(classID): \(thread)")
+            }
+        }
+    }
+    
+    
+    // call function with class id and the new high score and it will update the class' high score with the new high score
+    func setHighScore(classID: String, newHighScore: Int) {
+        
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.updateChildValues(["highScore": newHighScore])
+    }
+    
+    
+    // call function with class id and it will print out the class' high score
+    func readHighScore(classID: String) {
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let classData = snapshot.value as? [String: Any], let highScore = classData["highScore"] as? Int {
+                print("High Score for class \(classID): \(highScore)")
+            }
+        }
+    }
+    
+    
+    // call function with class id and a new score and it will calculate the new quizzes taken, calculate the new average, then update both of those values for that class
+    func setAverageScore(classID: String, newScore: Int) {
+        
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let classData = snapshot.value as? [String: Any], let averageScore = classData["averageScore"] as? Int, let quizzesTaken = classData["quizzesTaken"] as? Int {
+                let newQuizzesTaken = quizzesTaken + 1
+                let newAverageScore = ((averageScore * quizzesTaken) + newScore) / newQuizzesTaken
+                
+                classRef.updateChildValues(["averageScore": newAverageScore])
+                classRef.updateChildValues(["quizzesTaken": newQuizzesTaken])
+            }
+        }
+        
+        
+    }
+    
+    
+    // call function with class id and it will print out the class' average score
+    func readAverageScore(classID: String) {
+        let classRef = ref.child("classes").child(classID)
+        
+        classRef.observeSingleEvent(of: .value) { snapshot in
+            if let classData = snapshot.value as? [String: Any], let averageScore = classData["averageScore"] as? Int {
+                print("Average Score for class \(classID): \(averageScore)")
+            }
+        }
+    }
+    
+    
+    
     
 //    func setupCollectionView() {
 //        print("Setting up Collection View") // Debugging
@@ -75,56 +290,6 @@ class ViewController: UIViewController {
 //    }
 
     
-    func fetchClassesData() {
-        let classesRef = ref.child("classes")
-        
-        classesRef.observeSingleEvent(of: .value) { snapshot in
-            var fetchedClasses: [ClassData] = []
-            
-            for child in snapshot.children {
-                if let childSnapshot = child as? DataSnapshot,
-                   let classData = childSnapshot.value as? [String: Any] {
-                    
-                    let classID = childSnapshot.key
-                    
-                    let assistant = classData["assistant"] as? String ?? "N/A"
-                    let averageScore = classData["averageScore"] as? Int ?? 0
-                    let highScore = classData["highScore"] as? Int ?? 0
-                    let lowScore = classData["lowScore"] as? Int ?? 0
-                    let quizzesTaken = classData["quizzesTaken"] as? Int ?? 0
-                    let thread = classData["thread"] as? String ?? "No thread"
-                    let vector = classData["vector"] as? String ?? "No vector"
-                    
-                    var fileIds: [String] = []
-                    
-                    if let fileIdsArray = classData["fileIds"] as? [Any] {
-                        fileIds = fileIdsArray.compactMap { $0 as? String }
-                    }
-                                        
-                    let classObject = ClassData(
-                        id: classID,
-                        assistant: assistant,
-                        averageScore: averageScore,
-                        highScore: highScore,
-                        lowScore: lowScore,
-                        quizzesTaken: quizzesTaken,
-                        thread: thread,
-                        vector: vector,
-                        fileIds: fileIds
-                    )
-                    
-                    fetchedClasses.append(classObject)
-                }
-            }
-            
-            self.classes = fetchedClasses
-            self.filteredClasses = fetchedClasses
-            print(self.filteredClasses)
-            DispatchQueue.main.async {
-                self.classesCollectionView.reloadData()
-            }
-        }
-    }
     
 //    @objc func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //            return filteredClasses.count
@@ -213,135 +378,5 @@ class ViewController: UIViewController {
 //    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 //        searchBar.resignFirstResponder() // Dismiss the keyboard when search is pressed
 //    }
-    
-    func addClassData(classID: String, thread: String, vector: String, averageScore: Int, highScore: Int, lowScore: Int, quizzesTaken: Int, fileIds: [String]) {
-        let fileIdsDict = Dictionary(uniqueKeysWithValues: fileIds.enumerated().map { (index, fileId) in
-            (String(index + 1), fileId)
-        })
-        
-        let classData: [String: Any] = [
-            "thread": thread,
-            "vector": vector,
-            "averageScore": averageScore,
-            "highScore": highScore,
-            "lowScore": lowScore,
-            "quizzesTaken": quizzesTaken,
-            "fileIds": fileIdsDict
-        ]
-        
-        ref.child("classes").child(classID).setValue(classData)
-    }
-    
-    func appendFile(classID: String, newFileID: String) {
-        let fileIdsRef = ref.child("classes").child(classID).child("fileIds")
-        
-        fileIdsRef.observeSingleEvent(of: .value) { snapshot in
-            
-            var updatedFileIds: [String: String] = [:]
-            
-            if let fileIdsArray = snapshot.value as? [Any] {
-                var index = 1
-                for fileId in fileIdsArray {
-                    if let fileIdStr = fileId as? String {
-                        updatedFileIds[String(index)] = fileIdStr
-                        index += 1
-                    }
-                }
-            }
-            
-            let nextKey = String((updatedFileIds.keys.compactMap { Int($0) }.max() ?? 0) + 1)
-            
-            updatedFileIds[nextKey] = newFileID
-            
-            fileIdsRef.setValue(updatedFileIds)
-        }
-    }
-    
-    func readFiles(classID: String) {
-        let classRef = ref.child("classes").child(classID).child("fileIds")
-        
-        classRef.observeSingleEvent(of: .value) { snapshot in
-            if let fileIdsArray = snapshot.value as? [Any] {
-                let fileIds = fileIdsArray.compactMap { $0 as? String }
-                print("File IDs for class \(classID): \(fileIds)")
-            }
-        }
-    }
-
-
-    func deleteFile(classID: String, fileIdToDelete: String) {
-        let classRef = ref.child("classes").child(classID).child("fileIds")
-        
-        classRef.observeSingleEvent(of: .value) { snapshot in
-            if let fileIdsArray = snapshot.value as? [Any] {
-                
-                var updatedFileIds = fileIdsArray.compactMap { $0 as? String }.filter { $0 != "<null>" }
-                
-                updatedFileIds = updatedFileIds.filter { $0 != fileIdToDelete }
-                
-                classRef.setValue(updatedFileIds)
-            }
-        }
-    }
-    
-    func setVector(classID: String, newVector: String) {
-        let classRef = ref.child("classes").child(classID)
-        
-        classRef.updateChildValues(["vector": newVector])
-    }
-    
-    
-    func readVector(classID: String) {
-        let classRef = ref.child("classes").child(classID)
-        
-        classRef.observeSingleEvent(of: .value) { snapshot in
-            if let classData = snapshot.value as? [String: Any],
-               let vector = classData["vector"] as? String {
-                print("Vector for class \(classID): \(vector)")
-            }
-        }
-    }
-    
-    func setThread(classID: String, newThread: String) {
-        
-        let classRef = ref.child("classes").child(classID)
-        
-        classRef.updateChildValues(["thread": newThread])
-    }
-    
-    
-    func readThread(classID: String) {
-        let classRef = ref.child("classes").child(classID)
-        
-        classRef.observeSingleEvent(of: .value) { snapshot in
-            if let classData = snapshot.value as? [String: Any],
-               let thread = classData["thread"] as? String {
-                print("Thread for class \(classID): \(thread)")
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
     
 }

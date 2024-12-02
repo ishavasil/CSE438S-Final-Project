@@ -13,7 +13,6 @@ struct ClassData {
     var assistant: String
     var averageScore: Int
     var highScore: Int
-    var lowScore: Int
     var quizzesTaken: Int
     var thread: String
     var vector: String
