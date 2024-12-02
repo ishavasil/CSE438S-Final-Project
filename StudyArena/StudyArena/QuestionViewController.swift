@@ -90,10 +90,8 @@ class QuestionViewController: UIViewController {
         timer?.invalidate()
         timer = nil
         
-        // Call the completion handler to pass back the result
         completionHandler?(isCorrect)
         
-        // Instead of dismissing, let QuizViewController handle the next question immediately
        
     }
 }
