@@ -5,6 +5,7 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var questionNumberLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startQuizButton: UIButton!
+    
 
     let dummyQuestions: [QuizQuestion] = [
         QuizQuestion(
