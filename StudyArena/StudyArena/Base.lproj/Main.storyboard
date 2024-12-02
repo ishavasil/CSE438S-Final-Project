@@ -152,7 +152,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-QQ-B77">
-                                <rect key="frame" x="64" y="505" width="265" height="42"/>
+                                <rect key="frame" x="64" y="491" width="265" height="55"/>
                                 <color key="backgroundColor" red="0.58760264691134934" green="0.7989474330020202" blue="0.60461213321576013" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="265" id="usH-eG-FqQ"/>
@@ -176,13 +176,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Average Score: 76%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THu-FD-Pu8">
-                                <rect key="frame" x="73" y="712" width="247" height="26"/>
+                                <rect key="frame" x="73" y="670" width="247" height="26"/>
                                 <fontDescription key="fontDescription" name="Kailasa" family="Kailasa" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Top Score: 94%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HF3-xK-B8X">
-                                <rect key="frame" x="94.666666666666686" y="646" width="204" height="26"/>
+                                <rect key="frame" x="94.666666666666671" y="604" width="203.66666666666663" height="26"/>
                                 <fontDescription key="fontDescription" name="Kailasa" family="Kailasa" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -203,21 +203,24 @@
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="top" secondItem="eem-Tv-w5t" secondAttribute="bottom" constant="42" id="Bil-Q2-PGE"/>
                             <constraint firstItem="HvY-qL-hXq" firstAttribute="top" secondItem="vCQ-ET-npd" secondAttribute="bottom" constant="37" id="DEd-ry-3Ww"/>
                             <constraint firstItem="HvY-qL-hXq" firstAttribute="leading" secondItem="Eq4-V8-qs5" secondAttribute="leading" constant="79" id="EcN-A3-U30"/>
+                            <constraint firstItem="HF3-xK-B8X" firstAttribute="leading" secondItem="Eq4-V8-qs5" secondAttribute="leading" constant="94.666666666666686" id="JHi-1e-uq0"/>
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="centerX" secondItem="HvY-qL-hXq" secondAttribute="centerX" id="KwJ-Xw-0f2"/>
                             <constraint firstItem="THu-FD-Pu8" firstAttribute="top" secondItem="HF3-xK-B8X" secondAttribute="bottom" constant="40" id="Lzc-mS-FSl"/>
+                            <constraint firstItem="HF3-xK-B8X" firstAttribute="top" secondItem="MzR-QQ-B77" secondAttribute="bottom" constant="58" id="MdF-TS-BjJ"/>
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="centerX" secondItem="eem-Tv-w5t" secondAttribute="centerX" id="Nu0-l2-3bG"/>
                             <constraint firstItem="nR9-Va-CUn" firstAttribute="top" secondItem="VaS-Xx-sjX" secondAttribute="top" constant="298" id="SFQ-go-Fqo"/>
                             <constraint firstItem="S9p-6k-Ufp" firstAttribute="top" secondItem="Eq4-V8-qs5" secondAttribute="top" constant="55" id="aFI-On-h5R"/>
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="centerX" secondItem="vCQ-ET-npd" secondAttribute="centerX" id="j11-8b-V1C"/>
+                            <constraint firstItem="HF3-xK-B8X" firstAttribute="centerX" secondItem="VaS-Xx-sjX" secondAttribute="centerX" id="jVy-uz-jLt"/>
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="centerX" secondItem="HF3-xK-B8X" secondAttribute="centerX" id="k3c-W2-9jg"/>
-                            <constraint firstItem="HF3-xK-B8X" firstAttribute="top" secondItem="MzR-QQ-B77" secondAttribute="bottom" constant="99" id="ofv-Fs-Wbb"/>
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="leading" secondItem="MzR-QQ-B77" secondAttribute="leading" id="q3a-N5-WTI"/>
                             <constraint firstItem="eem-Tv-w5t" firstAttribute="top" secondItem="HvY-qL-hXq" secondAttribute="bottom" constant="70" id="qT0-Ly-5Cl"/>
                             <constraint firstItem="S9p-6k-Ufp" firstAttribute="leading" secondItem="Eq4-V8-qs5" secondAttribute="leading" constant="26" id="s4m-DZ-qy7"/>
                             <constraint firstItem="CAI-v5-HeK" firstAttribute="centerX" secondItem="THu-FD-Pu8" secondAttribute="centerX" id="s5k-qQ-RGb"/>
                             <constraint firstItem="THu-FD-Pu8" firstAttribute="leading" secondItem="Eq4-V8-qs5" secondAttribute="leading" constant="73" id="uvT-ce-Nw9"/>
-                            <constraint firstItem="MzR-QQ-B77" firstAttribute="top" secondItem="CAI-v5-HeK" secondAttribute="bottom" constant="29" id="wwG-XA-0aS"/>
-                            <constraint firstItem="MzR-QQ-B77" firstAttribute="top" secondItem="CAI-v5-HeK" secondAttribute="bottom" constant="29" id="zPE-gR-eTT"/>
+                            <constraint firstItem="Eq4-V8-qs5" firstAttribute="bottom" secondItem="THu-FD-Pu8" secondAttribute="bottom" constant="156" id="wIz-kY-ZdM"/>
+                            <constraint firstItem="MzR-QQ-B77" firstAttribute="top" secondItem="CAI-v5-HeK" secondAttribute="bottom" constant="15" id="wwG-XA-0aS"/>
+                            <constraint firstItem="MzR-QQ-B77" firstAttribute="top" secondItem="CAI-v5-HeK" secondAttribute="bottom" constant="15" id="zPE-gR-eTT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nHu-i6-7g7"/>
