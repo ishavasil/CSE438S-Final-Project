@@ -1,13 +1,5 @@
-//
-//  AddCourseViewController.swift
-//  StudyArena
-//
-//  Created by Pranav Palakodety on 11/30/24.
-//
-
 import UIKit
 import FirebaseDatabase
-
 
 class AddCourseViewController: UIViewController, UIDocumentPickerDelegate {
 
@@ -16,66 +8,176 @@ class AddCourseViewController: UIViewController, UIDocumentPickerDelegate {
     @IBOutlet weak var addCourseButton: UIButton!
 
     var ref: DatabaseReference!
-    var uploadedFiles: [String] = [] // Array to hold uploaded file names or URLs
+    var uploadedFiles: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         ref = Database.database().reference()
     }
     
-    // MARK: - Upload File
     @IBAction func uploadFileTapped(_ sender: UIButton) {
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.pdf, .image, .plainText], asCopy: true)
         documentPicker.delegate = self
         present(documentPicker, animated: true, completion: nil)
     }
     
-    // ONLY UPLOADS FILE NAMES:
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        for url in urls {
-            print("Selected file: \(url.lastPathComponent)")
-            uploadedFiles.append(url.lastPathComponent) // Store file name (or handle upload)
+    func getAPIKey() -> String? {
+        guard let path = Bundle.main.path(forResource: "OpenAI", ofType: "plist"),
+              let dictionary = NSDictionary(contentsOfFile: path),
+              let apiKey = dictionary["APIKey"] as? String else {
+            print("API Key not found in OpenAI.plist")
+            return nil
         }
+        return apiKey
     }
     
-    // FOR UPLOADING ACTUAL FILES:
-//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-//        let storageRef = Storage.storage().reference()
-//
-//        for url in urls {
-//            let fileName = url.lastPathComponent
-//            let fileRef = storageRef.child("course_files/\(fileName)")
-//
-//            // Upload file to Firebase Storage
-//            fileRef.putFile(from: url, metadata: nil) { metadata, error in
-//                if let error = error {
-//                    print("Error uploading file: \(error)")
-//                    return
-//                }
-//
-//                // Get download URL
-//                fileRef.downloadURL { url, error in
-//                    if let error = error {
-//                        print("Error getting file URL: \(error)")
-//                        return
-//                    }
-//
-//                    if let fileURL = url?.absoluteString {
-//                        print("Uploaded file URL: \(fileURL)")
-//                        self.uploadedFiles.append(fileURL) // Store file URL in the database
-//                    }
-//                }
-//            }
-//        }
-//    }
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let apiKey = getAPIKey() else {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Error", message: "Unable to retrieve API key")
+            }
+            return
+        }
+        
+        let apiUrl = URL(string: "https://api.openai.com/v1/files")!
+        let allowedFileTypes: [String] = [
+            "image/jpeg",
+            "image/png",
+            "image/gif",
+            "application/pdf",
+            "text/plain",
+            "text/csv",
+            "text/markdown",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        ]
+        let maxFileSize = 512 * 1024 * 1024  // 512 MB
+        
+        let uploadGroup = DispatchGroup()
+        
+        for url in urls {
+            guard let fileData = try? Data(contentsOf: url) else {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Error", message: "Could not read file data")
+                }
+                continue
+            }
+            
+            // Validate file size
+            guard fileData.count <= maxFileSize else {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Error", message: "File is too large. Maximum allowed size is 512 MB.")
+                }
+                continue
+            }
+            
+            // Validate file type
+            let fileType = mimeType(for: url)
+            guard allowedFileTypes.contains(fileType) else {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Error", message: "File type not allowed.")
+                }
+                continue
+            }
+            
+            // Prepare multipart form data
+            var request = URLRequest(url: apiUrl)
+            request.httpMethod = "POST"
+            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+            
+            let boundary = "Boundary-\(UUID().uuidString)"
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            
+            var body = Data()
+            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+            body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(url.lastPathComponent)\"\r\n".data(using: .utf8)!)
+            body.append("Content-Type: \(fileType)\r\n\r\n".data(using: .utf8)!)
+            body.append(fileData)
+            body.append("\r\n".data(using: .utf8)!)
+            
+            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+            body.append("Content-Disposition: form-data; name=\"purpose\"\r\n\r\n".data(using: .utf8)!)
+            body.append("assistants\r\n".data(using: .utf8)!)
+            body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+            
+            request.httpBody = body
+            
+            uploadGroup.enter()
+            
+            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+                defer { uploadGroup.leave() }
+                
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Upload Error", message: error.localizedDescription)
+                    }
+                    return
+                }
+                
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Error", message: "No data received")
+                    }
+                    return
+                }
+                
+                do {
+                    if let responseString = String(data: data, encoding: .utf8) {
+                        print("Raw Response: \(responseString)")
+                    }
+                    let jsonResponse = try JSONDecoder().decode(OpenAIFileResponse.self, from: data)
+                    DispatchQueue.main.async {
+                        self?.uploadedFiles.append(jsonResponse.id)
+                    }
+                } catch {
+                    print("Decoding Error: \(error)")
+                    print("Decoding Error Description: \(error.localizedDescription)")
+                    
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Error", message: "Failed to parse response: \(error.localizedDescription)")
+                    }
+                }
+            }
+            
+            task.resume()
+        }
+        
+        uploadGroup.notify(queue: .main) {
+            print("All files processed")
+        }
+    }
 
+    // OpenAI File Response Structure
+    struct OpenAIFileResponse: Codable {
+        let id: String
+        let object: String
+        let bytes: Int
+        let created_at: Int
+        let filename: String
+        let purpose: String
+    }
+    
+    // MIME Type Helper
+    func mimeType(for url: URL) -> String {
+        let ext = url.pathExtension.lowercased()
+        switch ext {
+        case "jpeg":
+            return "image/jpeg"
+        case "png":
+            return "image/png"
+        case "pdf":
+            return "application/pdf"
+        case "txt":
+            return "text/plain"
+        default:
+            return "application/octet-stream"
+        }
+    }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("Document picker was cancelled")
     }
 
-    // MARK: - Add Course
     @IBAction func addCourseTapped(_ sender: UIButton) {
         guard let courseName = courseNameTextField.text, !courseName.isEmpty else {
             showAlert(title: "Error", message: "Please enter a course name.")
@@ -87,20 +189,15 @@ class AddCourseViewController: UIViewController, UIDocumentPickerDelegate {
             return
         }
 
-        // Add class data to Firebase
         let newCourseID = courseName.replacingOccurrences(of: " ", with: "_").lowercased()
-        addClassData(classID: newCourseID, assistant: "default_assistant", averageScore: 0, highScore: 0, lowScore: 0, quizzesTaken: 0)
+        addClassData(classID: newCourseID, uploadedFiles: uploadedFiles)
     }
 
-    // Add class data function
-    func addClassData(classID: String, assistant: String, averageScore: Int, highScore: Int, lowScore: Int, quizzesTaken: Int) {
+    // Simplified add class data function
+    func addClassData(classID: String, uploadedFiles: [String]) {
         let classData: [String: Any] = [
-            "assistant": assistant,
-            "averageScore": averageScore,
-            "highScore": highScore,
-            "lowScore": lowScore,
-            "quizzesTaken": quizzesTaken,
-            "uploadedFiles": uploadedFiles // Add file names/URLs to the database
+            "assistant": "default_assistant",
+            "uploadedFiles": uploadedFiles
         ]
 
         ref.child("classes").child(classID).setValue(classData) { error, _ in
@@ -108,7 +205,7 @@ class AddCourseViewController: UIViewController, UIDocumentPickerDelegate {
                 self.showAlert(title: "Error", message: "Failed to add course: \(error.localizedDescription)")
             } else {
                 self.showAlert(title: "Success", message: "Course added successfully!") {
-                    self.dismiss(animated: true, completion: nil) // Return to previous screen
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }
@@ -122,16 +219,4 @@ class AddCourseViewController: UIViewController, UIDocumentPickerDelegate {
         })
         present(alert, animated: true, completion: nil)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

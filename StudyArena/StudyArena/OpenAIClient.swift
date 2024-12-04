@@ -31,7 +31,6 @@ class OpenAIService {
     }
     
     func getAssistant() -> String? {
-        // get key from plist. Plist not pushed to protect api key
         guard let path = Bundle.main.path(forResource: "OpenAI", ofType: "plist"),
               let dictionary = NSDictionary(contentsOfFile: path),
               let apiKey = dictionary["AssistantID"] as? String else {
