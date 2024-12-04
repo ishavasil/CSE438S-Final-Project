@@ -35,17 +35,19 @@ class SelectCourseViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showQuizStart" {
-            if let navigationController = segue.destination as? UINavigationController,
-               let detailVC = navigationController.topViewController as? QuizViewController,
-               let selectedClass = sender as? ClassData {
-                // Debugging print statements
-                print("Selected class: \(selectedClass.id)")
-                print("did this trigger")
-                
-                detailVC.classData = selectedClass
+            print("made it here")
+            print(classData)
+            
+            if let navigationController = segue.destination as? UINavigationController {
+                // Get the top view controller from the navigation controller stack
+                if let quizVC = navigationController.topViewController as? QuizViewController {
+                    quizVC.classData = self.classData
+                    print("Passing data: \(String(describing: self.classData))") // Debugging
+                }
             }
         }
     }
+
     
 
     /*
