@@ -13,6 +13,18 @@ class OpenAIService {
         assistant = getAssistant() ?? "error"
     }
     
+    init(files:[String]) {
+        apiKey = getAPIKey() ?? "error";
+        assistant = getAssistant() ?? "error"
+        self.thread = createClass(files: files)
+    }
+    
+    func createClass(files:[String]) -> String {
+        var vector = createVectorStore(fileIDS: files)
+        var threadID = createThread(vectorID: vector)
+        return threadID
+    }
+    
     init(ThreadID: String) {
         apiKey = getAPIKey() ?? "error"
         assistant = getAssistant() ?? "error"
@@ -40,6 +52,126 @@ class OpenAIService {
         return apiKey
     }
     
+    // Response Structures
+    struct VectorStoreResponse: Codable {
+        let id: String
+        let object: String
+        let createdAt: Int
+    }
+    
+    func createVectorStore(fileIDS:[String]) -> String {
+        var vector = ""
+        let url = URL(string: "https://api.openai.com/v1/vector_stores")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(self.apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("assistants=v2", forHTTPHeaderField: "OpenAI-Beta")
+        
+        let body: [String: Any] = ["name": "assistant"]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            defer { semaphore.signal() }
+            
+            guard let data = data,
+                  let vectorResponse = try? JSONDecoder().decode(VectorStoreResponse.self, from: data) else {
+                print("Vector store creation failed")
+                return
+            }
+            
+            vector = vectorResponse.id
+        }
+        task.resume()
+        semaphore.wait()
+        return vector
+    }
+    
+    func createThread(vectorID:String) -> String {
+        
+        
+        // Define the endpoint URL
+        let url = URL(string: "https://api.openai.com/v1/threads")
+        
+        // Create the request
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("assistants=v2", forHTTPHeaderField: "OpenAI-Beta")
+        
+        // Define the request body
+        let requestBody: [String: Any] = [
+            "messages": [
+                ["role": "user", "content": "generate a question"],
+            ],
+            "tool_resources": [
+                "file_search": [
+                    "vector_store_ids": ["\(vectorID)"],
+                ]
+            ]
+        ]
+        
+        
+        // Serialize the request body to JSON
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+        } catch {
+            print("Error serializing JSON: \(error)")
+        }
+        
+        // Create the data task
+        func fetchDataSync() -> String? {
+            var threadId: String?
+            let semaphore = DispatchSemaphore(value: 0) // Create a semaphore to block until the task is complete.
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    semaphore.signal() // Signal the semaphore to unblock.
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    print("Invalid response")
+                    semaphore.signal()
+                    return
+                }
+                
+                guard (200...299).contains(httpResponse.statusCode) else {
+                    print("HTTP Error: \(httpResponse.statusCode)")
+                    semaphore.signal()
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data received")
+                    semaphore.signal()
+                    return
+                }
+                
+                // Parse the response JSON
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                       let id = json["id"] as? String {
+                        threadId = id
+                    } else {
+                        print("Invalid JSON format")
+                    }
+                } catch {
+                    print("Error parsing JSON: \(error)")
+                }
+                semaphore.signal() // Signal the semaphore to unblock.
+            }
+            
+            task.resume()
+            semaphore.wait() // Block the thread until the semaphore is signaled.
+            return threadId
+        }
+        return "failure"
+    }
     
     
     func createRun(threadID: String, assistantID: String) -> String {

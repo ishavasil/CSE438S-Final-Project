@@ -6,36 +6,7 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startQuizButton: UIButton!
     var classData: ClassData? 
-    
-
-//    let dummyQuestions: [QuizQuestion] = [
-//        QuizQuestion(
-//            question: "Which of the following is a low-overhead option for communicating with 'the cloud'?",
-//            option1: "XML",
-//            option2: "JSON",
-//            option3: "CSV",
-//            option4: "HTML",
-//            correctOption: "option2"
-//        ),
-//        QuizQuestion(
-//            question: "What does HTTP stand for?",
-//            option1: "Hypertext Transfer Protocol",
-//            option2: "Hyperlink Text Processing",
-//            option3: "Hyper Transfer Process",
-//            option4: "High-level Text Protocol",
-//            correctOption: "option1"
-//        ),
-//        QuizQuestion(
-//            question: "Which programming language is used to build iOS apps?",
-//            option1: "Java",
-//            option2: "Swift",
-//            option3: "Python",
-//            option4: "C++",
-//            correctOption: "option2"
-//        )
-//    ]
-    
-    
+        
     
     var questions: [QuizQuestion] = []
 
@@ -45,16 +16,39 @@ class QuizViewController: UIViewController {
     var timeRemaining: Int = 150
 
     override func viewDidLoad() {
-        var thread = "thread_nkXspzjfX8QpMGJOc4EziICx"
-        let ai = OpenAIService(ThreadID: thread)
-        for _ in 1...10 {
-            questions.append(ai.getQuestion())
+        super.viewDidLoad()
+        
+        // Set up loading screen
+        let loadingView = UIView(frame: self.view.bounds)
+        loadingView.backgroundColor = UIColor(white: 0.0, alpha: 0.7) // Semi-transparent background
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = loadingView.center
+        activityIndicator.startAnimating()
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            // Perform loading tasks
+            var thread = "thread_nkXspzjfX8QpMGJOc4EziICx"
+            // var thread = classData?.assistant ?? "none"
+            let ai = OpenAIService(ThreadID: thread)
+            var loadedQuestions = [QuizQuestion]()
+            
+            for _ in 1...10 {
+                loadedQuestions.append(ai.getQuestion())
+            }
+            
+            DispatchQueue.main.async {
+                // Update UI on the main thread
+                self.questions = loadedQuestions
+                loadingView.removeFromSuperview() // Remove the loading view
+                // self.updateUIForQuizState(started: false) // Uncomment if needed
+                print("in quiz view controller data: ")
+                print(self.classData ?? "none")
+            }
         }
-        //super.viewDidLoad()
-//        updateUIForQuizState(started: false)
-        print("in quiz view controller data: ")
-        print(classData ?? "none")
     }
+
 
     @IBAction func startQuizTapped(_ sender: UIButton) {
         print("start Quiz tapped")
@@ -114,6 +108,7 @@ class QuizViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let quizEndVC = storyboard.instantiateViewController(withIdentifier: "QuizEndViewController") as? QuizEndViewController {
             quizEndVC.finalScore = correctAnswers
+            quizEndVC.classData = self.classData
             
             navigationController?.pushViewController(quizEndVC, animated: true)
         }
