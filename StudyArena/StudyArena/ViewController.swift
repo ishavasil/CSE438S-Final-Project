@@ -152,6 +152,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print("didSelectItemAt: \(selectedClass.id)") // Debugging
         performSegue(withIdentifier: "ShowSelectCourseSegue", sender: selectedClass)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowSelectCourseSegue" {
             if let navigationController = segue.destination as? UINavigationController,

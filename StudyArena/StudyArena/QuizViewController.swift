@@ -5,6 +5,7 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var questionNumberLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startQuizButton: UIButton!
+    var classData: ClassData? 
     
 
     let dummyQuestions: [QuizQuestion] = [
@@ -43,6 +44,8 @@ class QuizViewController: UIViewController {
     override func viewDidLoad() {
         //super.viewDidLoad()
 //        updateUIForQuizState(started: false)
+        print("in quiz view controller data: ")
+        print(classData ?? "none")
         questions = dummyQuestions
     }
 

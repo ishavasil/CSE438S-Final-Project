@@ -143,7 +143,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Competitive Mode"/>
                                 <connections>
-                                    <segue destination="hmh-Ti-NXL" kind="presentation" modalPresentationStyle="fullScreen" id="ywf-CZ-9lr"/>
+                                    <segue destination="hmh-Ti-NXL" kind="presentation" identifier="showQuizStart" modalPresentationStyle="fullScreen" id="ywf-CZ-9lr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-QQ-B77">
@@ -184,7 +184,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-6k-Ufp">
-                                <rect key="frame" x="29" y="22" width="77" height="35"/>
+                                <rect key="frame" x="29" y="66" width="77" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="PU5-kg-sk3"/>
                                 </constraints>
@@ -546,8 +546,8 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="U3M-wD-Hsi"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Course Name..." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-sS-rOd">
-                                <rect key="frame" x="74" y="201" width="244" height="42"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-sS-rOd">
+                                <rect key="frame" x="74.666666666666671" y="201" width="243.66666666666663" height="42"/>
                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="23"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -719,7 +719,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ptc-12-orn"/>
+        <segue reference="jaN-5a-Dpl"/>
         <segue reference="U3M-wD-Hsi"/>
     </inferredMetricsTieBreakers>
     <resources>
