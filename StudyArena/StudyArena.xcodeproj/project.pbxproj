@@ -16,6 +16,11 @@
 		5AB29D992CDBE40900B87DA7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5AB29D982CDBE40900B87DA7 /* FirebaseAnalytics */; };
 		B74D7E592CE467DC00E85A20 /* OpenAI.plist in Resources */ = {isa = PBXBuildFile; fileRef = B74D7E582CE467DC00E85A20 /* OpenAI.plist */; };
 		B74D7E5B2CE4712E00E85A20 /* OpenAIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74D7E5A2CE4712E00E85A20 /* OpenAIClient.swift */; };
+		C827C9C62CFD88A8006F7959 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827C9C12CFD88A8006F7959 /* QuizQuestion.swift */; };
+		C827C9C72CFD88A8006F7959 /* QuizEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827C9C22CFD88A8006F7959 /* QuizEndViewController.swift */; };
+		C827C9C82CFD88A8006F7959 /* AddCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827C9C32CFD88A8006F7959 /* AddCourseViewController.swift */; };
+		C827C9C92CFD88A8006F7959 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827C9C42CFD88A8006F7959 /* QuizViewController.swift */; };
+		C827C9CA2CFD88A8006F7959 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827C9C52CFD88A8006F7959 /* QuestionViewController.swift */; };
 		C8CB31882CDBDA89009D58CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB31872CDBDA89009D58CD /* AppDelegate.swift */; };
 		C8CB318A2CDBDA89009D58CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB31892CDBDA89009D58CD /* SceneDelegate.swift */; };
 		C8CB318C2CDBDA89009D58CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB318B2CDBDA89009D58CD /* ViewController.swift */; };
@@ -50,6 +55,11 @@
 		5AB29D952CDBE2D700B87DA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B74D7E582CE467DC00E85A20 /* OpenAI.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OpenAI.plist; sourceTree = "<group>"; };
 		B74D7E5A2CE4712E00E85A20 /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
+		C827C9C12CFD88A8006F7959 /* QuizQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
+		C827C9C22CFD88A8006F7959 /* QuizEndViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizEndViewController.swift; sourceTree = "<group>"; };
+		C827C9C32CFD88A8006F7959 /* AddCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCourseViewController.swift; sourceTree = "<group>"; };
+		C827C9C42CFD88A8006F7959 /* QuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		C827C9C52CFD88A8006F7959 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		C8CB31842CDBDA89009D58CD /* StudyArena.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyArena.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8CB31872CDBDA89009D58CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8CB31892CDBDA89009D58CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +131,11 @@
 				C8CB31892CDBDA89009D58CD /* SceneDelegate.swift */,
 				C8CB318B2CDBDA89009D58CD /* ViewController.swift */,
 				B74D7E5A2CE4712E00E85A20 /* OpenAIClient.swift */,
+				C827C9C32CFD88A8006F7959 /* AddCourseViewController.swift */,
+				C827C9C52CFD88A8006F7959 /* QuestionViewController.swift */,
+				C827C9C22CFD88A8006F7959 /* QuizEndViewController.swift */,
+				C827C9C12CFD88A8006F7959 /* QuizQuestion.swift */,
+				C827C9C42CFD88A8006F7959 /* QuizViewController.swift */,
 				C8CB318D2CDBDA89009D58CD /* Main.storyboard */,
 				C8CB31902CDBDA8A009D58CD /* Assets.xcassets */,
 				C8CB31922CDBDA8A009D58CD /* LaunchScreen.storyboard */,
@@ -293,11 +308,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A5426032CFA8416006781AE /* SelectCourseViewController.swift in Sources */,
+				C827C9C92CFD88A8006F7959 /* QuizViewController.swift in Sources */,
+				C827C9C82CFD88A8006F7959 /* AddCourseViewController.swift in Sources */,
 				B74D7E5B2CE4712E00E85A20 /* OpenAIClient.swift in Sources */,
+				C827C9C62CFD88A8006F7959 /* QuizQuestion.swift in Sources */,
 				C8CB318C2CDBDA89009D58CD /* ViewController.swift in Sources */,
 				C8CB31882CDBDA89009D58CD /* AppDelegate.swift in Sources */,
+				C827C9C72CFD88A8006F7959 /* QuizEndViewController.swift in Sources */,
 				C8CB318A2CDBDA89009D58CD /* SceneDelegate.swift in Sources */,
 				5A5426012CFA81C1006781AE /* ClassData.swift in Sources */,
+				C827C9CA2CFD88A8006F7959 /* QuestionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
