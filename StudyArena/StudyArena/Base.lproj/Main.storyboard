@@ -184,7 +184,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-6k-Ufp">
-                                <rect key="frame" x="29" y="66" width="77" height="35"/>
+                                <rect key="frame" x="29" y="22" width="77" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="PU5-kg-sk3"/>
                                 </constraints>
@@ -546,7 +546,7 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="U3M-wD-Hsi"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-sS-rOd">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Enter Course Name..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-sS-rOd">
                                 <rect key="frame" x="74.666666666666671" y="201" width="243.66666666666663" height="42"/>
                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="23"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -719,7 +719,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jaN-5a-Dpl"/>
+        <segue reference="ZPO-K0-Q8H"/>
         <segue reference="U3M-wD-Hsi"/>
     </inferredMetricsTieBreakers>
     <resources>

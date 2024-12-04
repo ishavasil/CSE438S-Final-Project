@@ -39,9 +39,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.addClassData(classID: "cse131", assistant: "asst_R98EZmBJAJITwPBicjQhTaEx", averageScore: 14, highScore: 15, lowScore: 13, quizzesTaken: 10)
         }
         
-        ai.sendMessageToAssistant(assistantId: assistantID) { response in
-            print(response ?? "no message recieved");
-        }
+
         
     }
     

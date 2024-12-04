@@ -35,8 +35,6 @@ class SelectCourseViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showQuizStart" {
-            print("made it here")
-            print(classData)
             
             if let navigationController = segue.destination as? UINavigationController {
                 // Get the top view controller from the navigation controller stack

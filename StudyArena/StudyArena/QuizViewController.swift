@@ -8,45 +8,52 @@ class QuizViewController: UIViewController {
     var classData: ClassData? 
     
 
-    let dummyQuestions: [QuizQuestion] = [
-        QuizQuestion(
-            question: "Which of the following is a low-overhead option for communicating with 'the cloud'?",
-            option1: "XML",
-            option2: "JSON",
-            option3: "CSV",
-            option4: "HTML",
-            correctOption: "option2"
-        ),
-        QuizQuestion(
-            question: "What does HTTP stand for?",
-            option1: "Hypertext Transfer Protocol",
-            option2: "Hyperlink Text Processing",
-            option3: "Hyper Transfer Process",
-            option4: "High-level Text Protocol",
-            correctOption: "option1"
-        ),
-        QuizQuestion(
-            question: "Which programming language is used to build iOS apps?",
-            option1: "Java",
-            option2: "Swift",
-            option3: "Python",
-            option4: "C++",
-            correctOption: "option2"
-        )
-    ]
-
+//    let dummyQuestions: [QuizQuestion] = [
+//        QuizQuestion(
+//            question: "Which of the following is a low-overhead option for communicating with 'the cloud'?",
+//            option1: "XML",
+//            option2: "JSON",
+//            option3: "CSV",
+//            option4: "HTML",
+//            correctOption: "option2"
+//        ),
+//        QuizQuestion(
+//            question: "What does HTTP stand for?",
+//            option1: "Hypertext Transfer Protocol",
+//            option2: "Hyperlink Text Processing",
+//            option3: "Hyper Transfer Process",
+//            option4: "High-level Text Protocol",
+//            correctOption: "option1"
+//        ),
+//        QuizQuestion(
+//            question: "Which programming language is used to build iOS apps?",
+//            option1: "Java",
+//            option2: "Swift",
+//            option3: "Python",
+//            option4: "C++",
+//            correctOption: "option2"
+//        )
+//    ]
+    
+    
+    
     var questions: [QuizQuestion] = []
+
     var currentQuestionIndex: Int = 0
     var correctAnswers: Int = 0
     var quizTimer: Timer?
     var timeRemaining: Int = 150
 
     override func viewDidLoad() {
+        var thread = "thread_nkXspzjfX8QpMGJOc4EziICx"
+        let ai = OpenAIService(ThreadID: thread)
+        for _ in 1...10 {
+            questions.append(ai.getQuestion())
+        }
         //super.viewDidLoad()
 //        updateUIForQuizState(started: false)
         print("in quiz view controller data: ")
         print(classData ?? "none")
-        questions = dummyQuestions
     }
 
     @IBAction func startQuizTapped(_ sender: UIButton) {
@@ -64,7 +71,6 @@ class QuizViewController: UIViewController {
 
     func startQuiz() {
         print("start Quiz triggered")
-        questions = dummyQuestions
         updateUIForQuizState(started: true)
         showNextQuestion()
         startTimer()
